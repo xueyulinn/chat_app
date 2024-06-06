@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import dbConnection from './mongodbConnection.js';
 import cookieParser from 'cookie-parser';
 
+import userRoute from './routes/userRoute.js';
 import authRoute from './routes/authRoute.js';
 import messageRoute from './routes/messageRoute.js';
 
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 app.use(cookieParser());
 app.use('/api/auth', authRoute);
 app.use('/api/message', messageRoute);
+app.use('/api/user', userRoute);
 
 app.listen(PORT, () => {
     dbConnection;
