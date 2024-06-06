@@ -1,8 +1,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import dbConnection from './mongodbConnection.js';
-import authRoute from './routes/authRoute.js';
 import cookieParser from 'cookie-parser';
+
+import authRoute from './routes/authRoute.js';
+import messageRoute from './routes/messageRoute.js';
 
 // loads the environment variables 
 // from a .env file into process.env
@@ -17,7 +19,7 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 
 app.use(cookieParser());
 app.use('/api/auth', authRoute);
-
+app.use('/api/message', messageRoute);
 
 app.listen(PORT, () => {
     dbConnection;
