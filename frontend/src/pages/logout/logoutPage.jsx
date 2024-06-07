@@ -24,7 +24,7 @@ const logoutPage = () => {
 
                 // Remove user data from local storage
                 localStorage.removeItem('chat-user');
-
+                
                 setUser(null);
 
             } catch (error) {

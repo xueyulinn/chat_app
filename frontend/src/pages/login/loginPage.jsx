@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useMutation } from '@tanstack/react-query'
-
+import { useAuth } from '../../context/authContext'
 
 
 const loginPage = () => {
+
+    const { setUser } = useAuth();
 
     const [input, setInput] = useState({
         userName: '',
@@ -30,6 +32,8 @@ const loginPage = () => {
                     throw new Error(data.message)
                 }
 
+                setUser(data);
+
             } catch (error) {
                 console.error(error.message);
                 throw new Error(error.message);
@@ -43,7 +47,7 @@ const loginPage = () => {
         }
     });
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         await mutate();
         setInput({
