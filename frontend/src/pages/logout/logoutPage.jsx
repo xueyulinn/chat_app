@@ -24,7 +24,7 @@ const logoutPage = () => {
 
                 // Remove user data from local storage
                 localStorage.removeItem('chat-user');
-                
+
                 setUser(null);
 
             } catch (error) {
@@ -48,8 +48,10 @@ const logoutPage = () => {
     return (
         <div className=' absolute left-0 bottom-0'>
             <button className="btn btn-circle "
-                onClick={handleLogout}>
-                <SlLogout />
+                onClick={handleLogout}
+                disabled={isPending}
+            >
+                {isPending ? <span className="loading loading-spinner loading-md"></span> : <SlLogout />}
             </button>
         </div>
     )

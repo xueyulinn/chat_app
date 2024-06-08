@@ -106,8 +106,9 @@ const signupPage = () => {
                 </div>
 
                 <div className='flex justify-center py-2'>
-                    <button className="btn btn-active btn-ghost text-center" onClick={handleSubmit}>
-                        {isPending ? 'isLoading...' : 'Signup'}</button>
+                    <button className="btn btn-active btn-ghost text-center" onClick={handleSubmit}
+                        disabled={isPending}>
+                        {isPending ? <span className="loading loading-spinner loading-md"></span> : 'Signup'}</button>
                 </div>
             </form>
         </div>

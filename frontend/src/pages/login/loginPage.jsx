@@ -31,7 +31,7 @@ const loginPage = () => {
                 if (!response.ok) {
                     throw new Error(data.message)
                 }
-
+                localStorage.setItem('chat-user', JSON.stringify(data));
                 setUser(data);
 
             } catch (error) {
@@ -87,8 +87,10 @@ const loginPage = () => {
 
                 <div className='flex  justify-center'>
                     <button className="btn btn-active btn-ghost text-center"
-                        onClick={handleSubmit}>
-                        {isPending ? 'Loading...' : 'Login'}
+                        onClick={handleSubmit}
+                        disabled={isPending}
+                    >
+                        {isPending ? <span className="loading loading-spinner loading-md"></span> : 'Login'}
                     </button>
                 </div>
 
