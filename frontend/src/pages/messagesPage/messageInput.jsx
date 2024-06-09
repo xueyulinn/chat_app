@@ -1,26 +1,84 @@
-import React from 'react'
+import { QueryClient, useMutation } from '@tanstack/react-query';
+import React from 'react';
+import toast from 'react-hot-toast';
 import { VscSend } from "react-icons/vsc";
-const messageInput = () => {
+import useConversation from '../../zustand/useConversation';
+
+const MessageInput = () => {
+
+  const queryClient = new QueryClient();
+
+  const [message, setMessage] = React.useState('');
+
+  const { messages, setMessages, selectedConversation } = useConversation();
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async () => {
+      try {
+        const res = await fetch(`/api/message/sendMessage/${selectedConversation._id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ message }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message);
+        }
+
+
+        return data.message;
+
+      } catch (error) {
+        console.error(error.message);
+        throw new Error(error.message);
+      }
+    },
+
+    onSuccess: (data) => {
+
+      setMessages(data);
+
+      queryClient.invalidateQueries({ queryKey: ['messages', selectedConversation?._id] });
+
+      setMessage('');
+    },
+
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+    mutate();
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSendMessage}>
       <div className='flex w-full absolute bottom-0'>
         <div className='relative w-full'>
           <input
             type="text"
             placeholder="Send a message"
             className="w-full input input-bordered input-info pr-10 h-12"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
           />
           <button
             type="submit"
-            className="absolute right-0 bottom-0 btn "
+            className="absolute right-0 bottom-0 btn"
+            disabled={isPending}
           >
-            <VscSend />
+            {isPending ? <span className="loading loading-spinner loading-md"></span> : <VscSend />}
           </button>
         </div>
       </div>
     </form>
+  );
+};
 
-  )
-}
-
-export default messageInput
+export default MessageInput;

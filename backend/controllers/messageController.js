@@ -29,7 +29,8 @@ export const sendMessageController = async (req, res) => {
         }
 
         Promise.all([newMessage.save(), conversation.save()]);
-        res.status(200).json({ message: 'Message sent' });
+
+        res.status(200).json({ message: newMessage.messageContent });
     } catch (error) {
         console.error('Error in sendMessageController: ', error.message);
         res.status(500).json({ message: 'Internal server error' });
@@ -52,7 +53,7 @@ export const getMessagesController = async (req, res) => {
         }
 
         res.status(200).json({ messages: conversation.messages });
-        
+
     } catch (error) {
         console.error('Error in getMessagesController: ', error.message);
         res.status(500).json({ message: 'Internal server error' });

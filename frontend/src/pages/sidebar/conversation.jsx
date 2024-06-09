@@ -9,7 +9,6 @@ const conversation = ({ conversation, lastIdx }) => {
 
     const isSelected = selectedConversation?._id === conversation._id;
 
-
     return (
         <div className=' flex flex-col'>
             <div className={`flex space-x-4 hover:bg-sky-300 ${isSelected ? 'bg-sky-300' : ''}`}

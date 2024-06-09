@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAuth } from '../../context/authContext'
 import useConversation from '../../zustand/useConversation'
 import ContainerHeader from './containerHeader'
-import MessageBox from './messageBox'
+import Messages from './messages'
 import MessageInput from './messageInput'
-import { useEffect } from 'react'
-import { set } from 'mongoose'
 
 const messagePage = () => {
 
@@ -36,7 +34,7 @@ const messagePage = () => {
       {!selectedConversation ? noChatSelected() :
         <>
           <ContainerHeader userName={selectedConversation.userName} />
-          <MessageBox />
+          <Messages />
           <MessageInput />
         </>}
     </div>

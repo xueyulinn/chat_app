@@ -41,6 +41,8 @@ export const signupController = async (req, res) => {
 
         await newUser.save();
 
+        jsonGen(res, newUser._id);
+
         res.status(201).json({
             fullName: newUser.fullName,
             userName: newUser.userName,
@@ -73,6 +75,7 @@ export const loginController = async (req, res) => {
         jsonGen(res, user._id);
 
         return res.json({
+            _id: user._id,
             fullName: user.fullName,
             userName: user.userName,
             profileImg: user.profileImg,
