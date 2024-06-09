@@ -21,9 +21,10 @@ const conversation = ({ conversation, lastIdx }) => {
                     </div>
                 </div>
 
-                <div className=' flex items-center space-x-8'>
-                    <span className='text-lg font-semibold text-gray-200'>{conversation.userName}</span>
+                <div className='flex flex-col flex-1'>
+                        <p className='font-bold text-gray-200'>{conversation.userName}</p>
                 </div>
+                
             </div>
 
             <div>

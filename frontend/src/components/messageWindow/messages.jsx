@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import useConversation from '../../zustand/useConversation.js'
 import Message from './message.jsx'
-import Skeleton from '../common/skeletonPage.jsx'
+import Skeleton from '../../pages/common/skeletonPage.jsx'
 
 const messages = () => {
 
@@ -42,11 +42,8 @@ const messages = () => {
         }
     }, [selectedConversation._id, refetch])
 
-
-
     return (
         <div className='overflow-auto'>
-
             {isLoading || isRefetching ? (
                 <Skeleton />
             ) : error ? (

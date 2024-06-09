@@ -1,14 +1,14 @@
 import React from 'react'
 import SearchInput from './searchInput'
 import Conversations from './conversations'
-import LogoutPage from '../logout/logoutPage'
+import Logout from './logout'
 
 const sidebarPage = () => {
   return (
-    <div className=' flex flex-col space-y-2 md:min-w-[350px]'>
+    <div className='border-r border-slate-500 p-4 flex flex-col'>
       <SearchInput />
       <Conversations />
-      <LogoutPage />
+      <Logout />
       <div className="divider divider-start"></div>
     </div>
   )

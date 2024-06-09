@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { useAuth } from '../../context/authContext'
 import useConversation from '../../zustand/useConversation'
-import ContainerHeader from './containerHeader'
 import Messages from './messages'
 import MessageInput from './messageInput'
+import Header from './header'
 
 const messagePage = () => {
 
@@ -20,25 +20,28 @@ const messagePage = () => {
     return () => { setSelectedConversation(null); }
   }, [])
 
-  const noChatSelected = () => {
+  const NoChatSelected = () => {
     return (
-      <div className='flex flex-col items-center justify-center h-full'>
-        <div className='text-2xl font-bold'>Welcome {user.userName}</div>
-        <div className='text-gray-500'>Start a conversation by selecting a user</div>
+      <div className='flex items-center justify-center w-full h-full'>
+        <div className='px-4 text-center sm:text-lg md:text-xl text-gray-200 font-semibold flex flex-col items-center gap-2'>
+          <p>Welcome 👋 {user.userName} ❄</p>
+          <p>Select a chat to start messaging</p>
+        </div>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div className=' flex flex-col mx-4 p-2 md:min-w-[450px] space-y-4 gap-4 relative'>
-      {!selectedConversation ? noChatSelected() :
+      {!selectedConversation ? (<NoChatSelected />) : (
         <>
-          <ContainerHeader userName={selectedConversation.userName} />
+          <Header userName={selectedConversation.userName} />
           <Messages />
           <MessageInput />
-        </>}
+        </>
+      )
+      }
     </div>
-
   )
 }
 

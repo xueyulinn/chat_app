@@ -1,16 +1,17 @@
-import { QueryClient, useMutation } from '@tanstack/react-query';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 import React from 'react';
 import toast from 'react-hot-toast';
 import { VscSend } from "react-icons/vsc";
 import useConversation from '../../zustand/useConversation';
+import { useState } from 'react';
 
 const MessageInput = () => {
 
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
-  const [message, setMessage] = React.useState('');
+  const [message, setMessage] = useState('');
 
-  const { messages, setMessages, selectedConversation } = useConversation();
+  const { selectedConversation } = useConversation();
 
   const { mutate, isPending } = useMutation({
     mutationFn: async () => {
@@ -29,7 +30,6 @@ const MessageInput = () => {
           throw new Error(data.message);
         }
 
-
         return data.message;
 
       } catch (error) {
@@ -38,18 +38,17 @@ const MessageInput = () => {
       }
     },
 
-    onSuccess: (data) => {
+    onSuccess: async() => {
 
-      setMessages(data);
-
-      queryClient.invalidateQueries({ queryKey: ['messages', selectedConversation?._id] });
+      await queryClient.invalidateQueries({ queryKey: ['messages', selectedConversation?._id] });
 
       setMessage('');
     },
 
     onError: (error) => {
       toast.error(error.message);
-    },
+    }
+
   });
 
   const handleSendMessage = async (e) => {

@@ -39,19 +39,15 @@ const searchInput = () => {
 
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div className=' flex flex-col space-y-2'>
-                <div className=' flex space-x-2'>
-                    <input type="text" placeholder="Search..." className=" rounded-lg input input-bordered w-full max-w-xs"
-                        value={search}
-                        onChange={handleChange} />
-                    <button className="btn btn-circle hover:bg-sky-200 ">
-                        <BsSearch />
-                    </button>
-                </div>
+        <form onSubmit={handleSubmit} className='flex items-center gap-2'>
+            <input type="text" placeholder="Search..." className=" rounded-lg input input-bordered w-full max-w-xs"
+                value={search}
+                onChange={handleChange} />
+            <button className="btn btn-circle hover:bg-sky-200 ">
+                <BsSearch />
+            </button>
 
-                <div className="divider"></div>
-            </div>
+
         </form>
     )
 }

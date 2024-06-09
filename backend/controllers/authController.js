@@ -10,6 +10,9 @@ export const signupController = async (req, res) => {
             return res.status(400).json({ message: "All fields are required" });
         }
 
+
+        if (userName.length < 3) return res.status(400).json({ message: "Username must be at least 3 characters" });
+
         const user = await User.findOne({ userName });
 
         if (user) {

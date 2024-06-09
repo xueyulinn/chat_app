@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import Conversation from './conversation'
+
+
 const conversations = () => {
 
   const { data, isLoading } = useQuery({
@@ -27,8 +29,9 @@ const conversations = () => {
   });
 
   return (
-    <div className=' flex flex-col  overflow-auto'>
-      {data && !isLoading && data.map((userIndividual, idx) => <Conversation key={userIndividual._id} conversation={userIndividual} lastIdx={idx === data.length - 1} />)}
+    <div className=' py-2 flex flex-col  overflow-auto'>
+      {data && !isLoading && 
+      data.map((userIndividual, idx) => <Conversation key={userIndividual._id} conversation={userIndividual} lastIdx={idx === data.length - 1} />)}
     </div>
   )
 }
