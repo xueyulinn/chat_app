@@ -1,16 +1,15 @@
-import React from 'react'
+import React from 'react';
+import toast from 'react-hot-toast';
 import { BsSearch } from "react-icons/bs";
 import useConversation from '../../zustand/useConversation';
-import toast from 'react-hot-toast';
-import { useQuery } from '@tanstack/react-query';
+import useGetConversations from '../../hooks/useGetConversations';
 
 const searchInput = () => {
     const [search, setSearch] = React.useState('');
 
     const { setSelectedConversation } = useConversation();
 
-    const { data: conversations } = useQuery({ queryKey: ['conversations'] });
-
+    const {loading, conversations} = useGetConversations();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -46,7 +45,6 @@ const searchInput = () => {
             <button className="btn btn-circle hover:bg-sky-200 ">
                 <BsSearch />
             </button>
-
 
         </form>
     )
