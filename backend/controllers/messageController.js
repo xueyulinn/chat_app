@@ -1,6 +1,7 @@
 import messageModel from '../models/messageModel.js';
 import conversationModel from '../models/conversationModel.js';
-
+import { getReceiverSocketId } from '../socket/socket.io.js';
+import { io } from '../socket/socket.io.js';
 
 export const sendMessageController = async (req, res) => {
     try {
@@ -30,7 +31,15 @@ export const sendMessageController = async (req, res) => {
 
         Promise.all([newMessage.save(), conversation.save()]);
 
-        res.status(200).json({ message: newMessage.messageContent });
+
+        const receiverSocketId = getReceiverSocketId(receiverId);
+
+        if (receiverSocketId) {
+            // io.to is used to emit events to a specific client
+            io.to(receiverSocketId).emit('getMessage', newMessage);
+        }
+
+        res.status(200).json({ message: newMessage });
     } catch (error) {
         console.error('Error in sendMessageController: ', error.message);
         res.status(500).json({ message: 'Internal server error' });

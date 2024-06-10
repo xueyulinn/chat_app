@@ -1,63 +1,23 @@
-import { useQueryClient, useMutation } from '@tanstack/react-query';
 import React from 'react';
-import toast from 'react-hot-toast';
 import { VscSend } from "react-icons/vsc";
-import useConversation from '../../zustand/useConversation';
+import useSendMessages  from '../../hooks/useSendMessages'
 import { useState } from 'react';
 
 const MessageInput = () => {
 
-  const queryClient = useQueryClient();
+  const [message, setMessage] = useState("");
+	const { loading, sendMessage } = useSendMessages();
 
-  const [message, setMessage] = useState('');
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		if (!message) return;
+		await sendMessage(message);
+		setMessage("");
+	};
 
-  const { selectedConversation } = useConversation();
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: async () => {
-      try {
-        const res = await fetch(`/api/message/sendMessage/${selectedConversation._id}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ message }),
-        });
-
-        const data = await res.json();
-
-        if (!res.ok) {
-          throw new Error(data.message);
-        }
-
-        return data.message;
-
-      } catch (error) {
-        console.error(error.message);
-        throw new Error(error.message);
-      }
-    },
-
-    onSuccess: async() => {
-
-      await queryClient.invalidateQueries({ queryKey: ['messages', selectedConversation?._id] });
-
-      setMessage('');
-    },
-
-    onError: (error) => {
-      toast.error(error.message);
-    }
-
-  });
-
-  const handleSendMessage = async (e) => {
-    e.preventDefault();
-    mutate();
-  };
 
   return (
-    <form onSubmit={handleSendMessage}>
+    <form onSubmit={handleSubmit}>
       <div className='flex w-full absolute bottom-0'>
         <div className='relative w-full'>
           <input
@@ -70,9 +30,9 @@ const MessageInput = () => {
           <button
             type="submit"
             className="absolute right-0 bottom-0 btn"
-            disabled={isPending}
+            disabled={loading}
           >
-            {isPending ? <span className="loading loading-spinner loading-md"></span> : <VscSend />}
+            {loading ? <span className="loading loading-spinner loading-md"></span> : <VscSend />}
           </button>
         </div>
       </div>

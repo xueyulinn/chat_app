@@ -1,8 +1,6 @@
-import React from 'react'
-import { useAuth } from '../../context/authContext'
-import useConversation from '../../zustand/useConversation'
-
-
+import React from 'react';
+import { useAuth } from '../../context/authContext';
+import useConversation from '../../zustand/useConversation';
 
 const message = ({ message }) => {
 
@@ -16,6 +14,9 @@ const message = ({ message }) => {
     const chatName = fromMe ? user.userName : selectedConversation.userName;
     const chatBubble = fromMe ? 'bg-blue-500' : '';
 
+    const shakeClass = message.shouldShake ? "shake" : "";
+
+
     return (
         <div className='overflow-auto w-full'>
             <div className={chatClassName}>
@@ -28,7 +29,7 @@ const message = ({ message }) => {
                     {chatName}
                     <time className="text-xs opacity-50">12:45</time>
                 </div>
-                <div className={` chat-bubble ${chatBubble}`}>{message.messageContent}</div>
+                <div className={` chat-bubble ${chatBubble}  ${shakeClass}`}>{message.messageContent}</div>
                 <div className="chat-footer opacity-50">
                     Delivered
                 </div>

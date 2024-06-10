@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import { AuthProvider } from './context/authContext'
 import './index.css'
+import { SocketContextProvider } from './context/socketContext.jsx'
 
 const queryClient = new QueryClient();
 
@@ -12,9 +13,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <SocketContextProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </SocketContextProvider>
       </AuthProvider>
     </QueryClientProvider>
   </React.StrictMode>,

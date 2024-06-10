@@ -5,6 +5,8 @@ const AuthContext = createContext();
 
 // Custom hook to use the auth context
 export const useAuth = () => {
+    // useContext will return the value of the passed context
+    // it will search for the closest provider and return the value
     return useContext(AuthContext);
 }
 
